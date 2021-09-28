@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "668901326316",
+    "project_id": "tilawat-e3fb2",
+    "storage_bucket": "tilawat-e3fb2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668901326316:android:a8c59a975eccd34e3ed4c9",
+        "android_client_info": {
+          "package_name": "com.intentsoft.tilawat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "668901326316-m46tdoatqal7liugpe2ef7iaim5mj2i0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiESebS-06mwyk6XgaSugcIBtgdphHwm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "668901326316-m46tdoatqal7liugpe2ef7iaim5mj2i0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
