@@ -94,10 +94,10 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
 
     // ExoPlayer
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.15.1'
-    implementation 'com.google.android.exoplayer:exoplayer-dash:2.15.1'
-    implementation 'com.google.android.exoplayer:exoplayer-ui:2.15.1'
-    implementation 'com.google.android.exoplayer:extension-mediasession:2.15.1'
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.11.8'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.11.8'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.11.8'
+    implementation 'com.google.android.exoplayer:extension-mediasession:2.11.8'
 
 
 }
