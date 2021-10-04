@@ -5,9 +5,12 @@
       <map>
         <entry key="..\:/Users/user/AndroidStudioProjects/Tilawat2/app/src/main/res/drawable/circle_drawable.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Tilawat2/app/src/main/res/drawable/ic_skip_previous.xml" value="0.1015625" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Tilawat2/app/src/main/res/layout-land/fragment_song.xml" value="0.1591710758377425" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Tilawat2/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Tilawat2/app/src/main/res/layout/fragment_home.xml" value="0.12771739130434784" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Tilawat2/app/src/main/res/layout/fragment_song.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Tilawat2/app/src/main/res/layout/list_item.xml" value="0.14855072463768115" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Tilawat2/app/src/main/res/layout/swipe_item.xml" value="0.1" />
       </map>
     </option>
   </component>

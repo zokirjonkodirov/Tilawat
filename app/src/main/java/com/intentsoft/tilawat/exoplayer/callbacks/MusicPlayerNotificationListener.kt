@@ -11,11 +11,12 @@ import com.intentsoft.tilawat.exoplayer.MusicService
  * @author user
  * @date 29.09.2021
  */
-class MusicPlayerNotificationPlayer(
+class MusicPlayerNotificationListener(
     private val musicService: MusicService
-): PlayerNotificationManager.NotificationListener {
+) : PlayerNotificationManager.NotificationListener {
 
     override fun onNotificationCancelled(notificationId: Int, dismissedByUser: Boolean) {
+        super.onNotificationCancelled(notificationId, dismissedByUser)
         musicService.apply {
             stopForeground(true)
             isForegroundService = false
@@ -29,14 +30,13 @@ class MusicPlayerNotificationPlayer(
         ongoing: Boolean
     ) {
         super.onNotificationPosted(notificationId, notification, ongoing)
-
         musicService.apply {
-            if (ongoing && isForegroundService) {
+            if(ongoing && !isForegroundService) {
                 ContextCompat.startForegroundService(
                     this,
                     Intent(applicationContext, this::class.java)
                 )
-                startForeground(NOTIFICATION_ID, notification) // starts notification player
+                startForeground(NOTIFICATION_ID, notification)
                 isForegroundService = true
             }
         }

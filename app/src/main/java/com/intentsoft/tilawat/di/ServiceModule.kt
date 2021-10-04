@@ -1,18 +1,25 @@
 package com.intentsoft.tilawat.di
 
 import android.content.Context
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
+import com.intentsoft.tilawat.R
+import com.intentsoft.tilawat.adpters.SwipeSongAdapter
 import com.intentsoft.tilawat.data.remote.MusicDatabase
+import com.intentsoft.tilawat.exoplayer.MusicServiceConnection
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ServiceComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ServiceScoped
+import javax.inject.Singleton
 
 /**
  * @author user
@@ -20,7 +27,7 @@ import dagger.hilt.android.scopes.ServiceScoped
  * This Servis is responsible for palying music
  */
 @Module
-@InstallIn(ServiceComponent::class) //Dagger has specific component for Android Components
+@InstallIn(ServiceComponent::class)
 object ServiceModule {
 
     @ServiceScoped
@@ -41,7 +48,7 @@ object ServiceModule {
         audioAttributes: AudioAttributes
     ) = SimpleExoPlayer.Builder(context).build().apply {
         setAudioAttributes(audioAttributes, true)
-        setHandleAudioBecomingNoisy(true) //if headphones will bee plugged in music will pause
+        setHandleAudioBecomingNoisy(true)
     }
 
     @ServiceScoped

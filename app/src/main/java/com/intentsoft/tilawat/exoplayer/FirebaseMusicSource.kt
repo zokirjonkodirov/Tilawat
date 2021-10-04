@@ -1,14 +1,17 @@
 package com.intentsoft.tilawat.exoplayer
 
+//import android.net.Uri
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaBrowserCompat.MediaItem.FLAG_PLAYABLE
 import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.MediaMetadataCompat.*
+//import android.util.Log
 import androidx.core.net.toUri
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.intentsoft.tilawat.exoplayer.State.*
 import com.intentsoft.tilawat.data.remote.MusicDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -25,7 +28,7 @@ class FirebaseMusicSource @Inject constructor(
     var songs = emptyList<MediaMetadataCompat>()
 
     suspend fun fetchMediaData() = withContext(Dispatchers.IO) {
-        state = State.STATE_INITIALIZING
+        state = STATE_INITIALIZING
         val allSongs = musicDatabase.getAllSongs()
         songs = allSongs.map { song ->
             MediaMetadataCompat.Builder()
@@ -40,7 +43,7 @@ class FirebaseMusicSource @Inject constructor(
                 .putString(METADATA_KEY_DISPLAY_DESCRIPTION, song.subtitle)
                 .build()
         }
-        state = State.STATE_INITIALIZED
+        state = STATE_INITIALIZED
     }
 
     fun asMediaSource(dataSourceFactory: DefaultDataSourceFactory): ConcatenatingMediaSource {
@@ -50,7 +53,6 @@ class FirebaseMusicSource @Inject constructor(
                 .createMediaSource(song.getString(METADATA_KEY_MEDIA_URI).toUri())
             concatenatingMediaSource.addMediaSource(mediaSource)
         }
-
         return concatenatingMediaSource
     }
 
@@ -66,35 +68,33 @@ class FirebaseMusicSource @Inject constructor(
     }.toMutableList()
 
     private val onReadyListeners = mutableListOf<(Boolean) -> Unit>()
-    private var state: State = State.STATE_CREATED
 
-    set(value) {
-        if (value == State.STATE_INITIALIZED || value == State.STATE_ERROR) {
-            synchronized(onReadyListeners) {
-                field = value
-                onReadyListeners.forEach { listener ->
-                    listener(state == State.STATE_INITIALIZED)
+    private var state: State = STATE_CREATED
+        set(value) {
+            if(value == STATE_INITIALIZED || value == STATE_ERROR) {
+                synchronized(onReadyListeners) {
+                    field = value
+                    onReadyListeners.forEach { listener ->
+                        listener(state == STATE_INITIALIZED)
+                    }
                 }
+            } else {
+                field = value
             }
-        } else {
-            field = value
         }
-    }
 
     fun whenReady(action: (Boolean) -> Unit): Boolean {
-        if (state == State.STATE_CREATED || state == State.STATE_INITIALIZING) {
+        if(state == STATE_CREATED || state == STATE_INITIALIZING) {
             onReadyListeners += action
             return false
         } else {
-            action(state == State.STATE_INITIALIZED)
+            action(state == STATE_INITIALIZED)
             return true
         }
     }
 }
 
-//States of Music Service
 enum class State {
-
     STATE_CREATED,
     STATE_INITIALIZING,
     STATE_INITIALIZED,

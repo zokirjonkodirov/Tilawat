@@ -17,7 +17,7 @@ import com.intentsoft.tilawat.exoplayer.FirebaseMusicSource
 class MusicPlaybackPreparer(
     private val firebaseMusicSource: FirebaseMusicSource,
     private val playerPrepared: (MediaMetadataCompat?) -> Unit
-): MediaSessionConnector.PlaybackPreparer {
+) : MediaSessionConnector.PlaybackPreparer {
 
     override fun onCommand(
         player: Player,
@@ -36,9 +36,7 @@ class MusicPlaybackPreparer(
 
     override fun onPrepareFromMediaId(mediaId: String, playWhenReady: Boolean, extras: Bundle?) {
         firebaseMusicSource.whenReady {
-            val itemToPlay = firebaseMusicSource.songs.find {
-                mediaId == it.description.mediaId
-            }
+            val itemToPlay = firebaseMusicSource.songs.find { mediaId == it.description.mediaId }
             playerPrepared(itemToPlay)
         }
     }
