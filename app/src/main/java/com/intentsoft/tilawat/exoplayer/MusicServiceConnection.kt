@@ -2,23 +2,20 @@ package com.intentsoft.tilawat.exoplayer
 
 import android.content.ComponentName
 import android.content.Context
-import android.media.MediaDrm
-import android.media.browse.MediaBrowser
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.intentsoft.tilawat.data.other.Contstants.NETWORK_ERROR
+import com.intentsoft.tilawat.data.other.Constants.NETWORK_ERROR
 import com.intentsoft.tilawat.data.other.Event
 import com.intentsoft.tilawat.data.other.Resource
-import kotlin.math.E
+import timber.log.Timber
 
 /**
- * @author user
+ * @author Zokirjon
  * @date 29.09.2021
  */
 class MusicServiceConnection(
@@ -66,7 +63,7 @@ class MusicServiceConnection(
     ) : MediaBrowserCompat.ConnectionCallback() {
 
         override fun onConnected() {
-            Log.d("MusicServiceConnection", "CONNECTED")
+            Timber.tag("MusicServiceConnection").d("CONNECTED")
             mediaController = MediaControllerCompat(context, mediaBrowser.sessionToken).apply {
                 registerCallback(MediaContollerCallback())
             }
@@ -74,19 +71,27 @@ class MusicServiceConnection(
         }
 
         override fun onConnectionSuspended() {
-            Log.d("MusicServiceConnection", "SUSPENDED")
+            Timber.tag("MusicServiceConnection").d("SUSPENDED")
 
-            _isConnected.postValue(Event(Resource.error(
-                "The connection was suspended", false
-            )))
+            _isConnected.postValue(
+                Event(
+                    Resource.error(
+                        "The connection was suspended", false
+                    )
+                )
+            )
         }
 
         override fun onConnectionFailed() {
-            Log.d("MusicServiceConnection", "FAILED")
+            Timber.tag("MusicServiceConnection").d("FAILED")
 
-            _isConnected.postValue(Event(Resource.error(
-                "Couldn't connect to media browser", false
-            )))
+            _isConnected.postValue(
+                Event(
+                    Resource.error(
+                        "Couldn't connect to media browser", false
+                    )
+                )
+            )
         }
     }
 

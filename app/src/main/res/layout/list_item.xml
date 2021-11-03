@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintSurah"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="86dp">
 
     <ImageView
         android:id="@+id/ivItemImage"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_number_decor"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -18,24 +23,52 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:fontFamily="@font/poppins_black"
         android:gravity="center|left"
-        android:text="Playlist Title"
-        android:layout_marginTop="8dp"
+        android:text="Surah Name"
+        android:textColor="@color/colorPrimary"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivItemImage"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/ivItemImage" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvSecondary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="100 Songs"
-        android:textSize="14sp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="100 Songs"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivItemImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivItemImage"
         app:layout_constraintTop_toBottomOf="@+id/tvPrimary" />
+
+    <TextView
+        android:id="@+id/tvSurahNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="1"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivItemImage"
+        app:layout_constraintEnd_toEndOf="@+id/ivItemImage"
+        app:layout_constraintStart_toStartOf="@+id/ivItemImage"
+        app:layout_constraintTop_toTopOf="@+id/ivItemImage" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

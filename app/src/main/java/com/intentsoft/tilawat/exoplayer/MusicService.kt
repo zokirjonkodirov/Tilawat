@@ -13,8 +13,8 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.ext.mediasession.TimelineQueueNavigator
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
-import com.intentsoft.tilawat.data.other.Contstants.MEDIA_ROOT_ID
-import com.intentsoft.tilawat.data.other.Contstants.NETWORK_ERROR
+import com.intentsoft.tilawat.data.other.Constants.MEDIA_ROOT_ID
+import com.intentsoft.tilawat.data.other.Constants.NETWORK_ERROR
 import com.intentsoft.tilawat.exoplayer.callbacks.MusicPlaybackPreparer
 import com.intentsoft.tilawat.exoplayer.callbacks.MusicPlayerEventListener
 import com.intentsoft.tilawat.exoplayer.callbacks.MusicPlayerNotificationListener

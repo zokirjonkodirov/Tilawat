@@ -3,6 +3,8 @@ package com.intentsoft.tilawat.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
+import android.view.Menu
+import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
@@ -75,13 +77,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideBottomBar() {
-        ivCurSongImage.isVisible = false
+//        ivCurSongImage.isVisible = false
         vpSong.isVisible = false
         ivPlayPause.isVisible = false
     }
 
     private fun showBottomBar() {
-        ivCurSongImage.isVisible = true
+//        ivCurSongImage.isVisible = true
         vpSong.isVisible = true
         ivPlayPause.isVisible = true
     }
@@ -102,8 +104,8 @@ class MainActivity : AppCompatActivity() {
                         result.data?.let { songs ->
                             swipeSongAdapter.songs = songs
                             if (songs.isNotEmpty()) {
-                                glide.load((curPlayingSong ?: songs[0]).imageUrl)
-                                    .into(ivCurSongImage)
+//                                glide.load((curPlayingSong ?: songs[0]).imageUrl)
+//                                    .into(ivCurSongImage)
                             }
                             switchViewPagerToCurrentSong(curPlayingSong ?: return@observe)
                         }
@@ -117,7 +119,7 @@ class MainActivity : AppCompatActivity() {
             if (it == null) return@observe
 
             curPlayingSong = it.toSong()
-            glide.load(curPlayingSong?.imageUrl).into(ivCurSongImage)
+//            glide.load(curPlayingSong?.imageUrl).into(ivCurSongImage)
             switchViewPagerToCurrentSong(curPlayingSong ?: return@observe)
         }
         mainViewModel.playbackState.observe(this) {

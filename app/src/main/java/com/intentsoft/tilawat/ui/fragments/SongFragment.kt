@@ -1,10 +1,15 @@
 package com.intentsoft.tilawat.ui.fragments
 
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.SearchView
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,7 +17,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.RequestManager
 import com.intentsoft.tilawat.R
 import com.intentsoft.tilawat.data.entities.Song
-import com.intentsoft.tilawat.data.other.Status
 import com.intentsoft.tilawat.data.other.Status.SUCCESS
 import com.intentsoft.tilawat.exoplayer.isPlaying
 import com.intentsoft.tilawat.exoplayer.toSong
@@ -37,8 +41,8 @@ class SongFragment : Fragment(R.layout.fragment_song) {
     lateinit var glide: RequestManager
 
     private lateinit var mainViewModel: MainViewModel
-    private val songViewModel: SongViewModel by viewModels()
 
+    private val songViewModel: SongViewModel by viewModels()
 
     private var curPlayingSong: Song? = null
 
@@ -95,9 +99,10 @@ class SongFragment : Fragment(R.layout.fragment_song) {
     }
 
     private fun updateTitleAndSongImage(song: Song) {
-        val title = "${song.title} - ${song.subtitle}"
+        val title = song.title
         tvSongName.text = title
-        glide.load(song.imageUrl).into(ivSongImage)
+        tvSurahNameCard.text = title
+//        glide.load(song.imageUrl).into(ivSongImage)
     }
 
     private fun subscribeToObservers() {

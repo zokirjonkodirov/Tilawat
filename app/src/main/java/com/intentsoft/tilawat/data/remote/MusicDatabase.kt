@@ -2,7 +2,8 @@ package com.intentsoft.tilawat.data.remote
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.intentsoft.tilawat.data.entities.Song
-import com.intentsoft.tilawat.data.other.Contstants.SONG_COLLECTION
+import com.intentsoft.tilawat.data.other.Constants.SONG_COLLECTION
+import com.intentsoft.tilawat.data.other.Constants.SURAH_COLLECTION
 import kotlinx.coroutines.tasks.await
 
 /**
@@ -12,7 +13,7 @@ import kotlinx.coroutines.tasks.await
 class MusicDatabase {
 
     private val firestore = FirebaseFirestore.getInstance()
-    private val songCollection = firestore.collection(SONG_COLLECTION)
+    private val songCollection = firestore.collection(SONG_COLLECTION  )
 
     suspend fun getAllSongs(): List<Song> {
         return try {

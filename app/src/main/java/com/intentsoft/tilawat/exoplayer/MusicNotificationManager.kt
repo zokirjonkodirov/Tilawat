@@ -12,8 +12,8 @@ import com.bumptech.glide.request.transition.Transition
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import com.intentsoft.tilawat.R
-import com.intentsoft.tilawat.data.other.Contstants.NOTIFICATION_CHANNEL_ID
-import com.intentsoft.tilawat.data.other.Contstants.NOTIFICATION_ID
+import com.intentsoft.tilawat.data.other.Constants.NOTIFICATION_CHANNEL_ID
+import com.intentsoft.tilawat.data.other.Constants.NOTIFICATION_ID
 
 /**
  * @author user
@@ -61,7 +61,7 @@ class MusicNotificationManager(
             return mediaController.sessionActivity
         }
 
-        override fun getCurrentContentText(player: Player): CharSequence? {
+        override fun getCurrentContentText(player: Player): CharSequence {
             return mediaController.metadata.description.subtitle.toString()
         }
 
