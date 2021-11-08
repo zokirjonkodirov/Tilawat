@@ -77,13 +77,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideBottomBar() {
-//        ivCurSongImage.isVisible = false
+        ivCurSongImage.isVisible = false
         vpSong.isVisible = false
         ivPlayPause.isVisible = false
     }
 
     private fun showBottomBar() {
-//        ivCurSongImage.isVisible = true
+        ivCurSongImage.isVisible = true
         vpSong.isVisible = true
         ivPlayPause.isVisible = true
     }

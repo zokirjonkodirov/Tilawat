@@ -1,6 +1,7 @@
 package com.intentsoft.tilawat.ui.fragments
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -35,6 +36,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         songAdapter.setItemClickListener {
             mainViewModel.playOrToggleSong(it)
         }
+
     }
 
     private fun setupRecyclerView() = rvAllSongs.apply {
