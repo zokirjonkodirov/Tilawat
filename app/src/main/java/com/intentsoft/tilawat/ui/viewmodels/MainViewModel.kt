@@ -15,10 +15,6 @@ import com.intentsoft.tilawat.exoplayer.isPrepared
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-/**
- * @author user
- * @date 29.09.2021
- */
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val musicServiceConnection: MusicServiceConnection
@@ -33,24 +29,26 @@ class MainViewModel @Inject constructor(
 
     init {
         _mediaItems.postValue(Resource.loading(null))
-        musicServiceConnection.subscribe(MEDIA_ROOT_ID, object : MediaBrowserCompat.SubscriptionCallback() {
-            override fun onChildrenLoaded(
-                parentId: String,
-                children: MutableList<MediaBrowserCompat.MediaItem>
-            ) {
-                super.onChildrenLoaded(parentId, children)
-                val items = children.map {
-                    Song(
-                        it.mediaId!!,
-                        it.description.title.toString(),
-                        it.description.subtitle.toString(),
-                        it.description.mediaUri.toString(),
-                        it.description.iconUri.toString()
-                    )
+        musicServiceConnection.subscribe(
+            MEDIA_ROOT_ID,
+            object : MediaBrowserCompat.SubscriptionCallback() {
+                override fun onChildrenLoaded(
+                    parentId: String,
+                    children: MutableList<MediaBrowserCompat.MediaItem>
+                ) {
+                    super.onChildrenLoaded(parentId, children)
+                    val items = children.map {
+                        Song(
+                            it.mediaId!!,
+                            it.description.title.toString(),
+                            it.description.subtitle.toString(),
+                            it.description.mediaUri.toString(),
+                            it.description.iconUri.toString()
+                        )
+                    }
+                    _mediaItems.postValue(Resource.success(items))
                 }
-                _mediaItems.postValue(Resource.success(items))
-            }
-        })
+            })
     }
 
     fun skipToNextSong() {
@@ -67,11 +65,12 @@ class MainViewModel @Inject constructor(
 
     fun playOrToggleSong(mediaItem: Song, toggle: Boolean = false) {
         val isPrepared = playbackState.value?.isPrepared ?: false
-        if(isPrepared && mediaItem.mediaId ==
-            curPlayingSong.value?.getString(METADATA_KEY_MEDIA_ID)) {
+        if (isPrepared && mediaItem.mediaId
+            == curPlayingSong.value?.getString(METADATA_KEY_MEDIA_ID)
+        ) {
             playbackState.value?.let { playbackState ->
                 when {
-                    playbackState.isPlaying -> if(toggle) musicServiceConnection.transportControls.pause()
+                    playbackState.isPlaying -> if (toggle) musicServiceConnection.transportControls.pause()
                     playbackState.isPlayEnabled -> musicServiceConnection.transportControls.play()
                     else -> Unit
                 }
@@ -83,6 +82,9 @@ class MainViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        musicServiceConnection.unsubscribe(MEDIA_ROOT_ID, object : MediaBrowserCompat.SubscriptionCallback() {})
+        musicServiceConnection.unsubscribe(
+            MEDIA_ROOT_ID,
+            object : MediaBrowserCompat.SubscriptionCallback() {}
+        )
     }
 }

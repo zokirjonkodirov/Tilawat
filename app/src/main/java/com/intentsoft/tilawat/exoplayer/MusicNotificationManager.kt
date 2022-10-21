@@ -15,10 +15,6 @@ import com.intentsoft.tilawat.R
 import com.intentsoft.tilawat.data.other.Constants.NOTIFICATION_CHANNEL_ID
 import com.intentsoft.tilawat.data.other.Constants.NOTIFICATION_ID
 
-/**
- * @author user
- * @date 28.09.2021
- */
 class MusicNotificationManager(
     private val context: Context,
     sessionToken: MediaSessionCompat.Token,

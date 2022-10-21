@@ -7,10 +7,6 @@ import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import com.intentsoft.tilawat.data.other.Constants.NOTIFICATION_ID
 import com.intentsoft.tilawat.exoplayer.MusicService
 
-/**
- * @author user
- * @date 29.09.2021
- */
 class MusicPlayerNotificationListener(
     private val musicService: MusicService
 ) : PlayerNotificationManager.NotificationListener {
@@ -31,7 +27,7 @@ class MusicPlayerNotificationListener(
     ) {
         super.onNotificationPosted(notificationId, notification, ongoing)
         musicService.apply {
-            if(ongoing && !isForegroundService) {
+            if (ongoing && !isForegroundService) {
                 ContextCompat.startForegroundService(
                     this,
                     Intent(applicationContext, this::class.java)

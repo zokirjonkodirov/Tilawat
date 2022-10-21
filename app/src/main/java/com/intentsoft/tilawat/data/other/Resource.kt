@@ -1,9 +1,5 @@
 package com.intentsoft.tilawat.data.other
 
-/**
- * @author user
- * @date 29.09.2021
- */
 data class Resource<out T>(
     val status: Status,
     val data: T?,

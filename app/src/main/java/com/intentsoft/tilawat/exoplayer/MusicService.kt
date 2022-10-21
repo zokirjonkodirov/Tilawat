@@ -19,13 +19,12 @@ import com.intentsoft.tilawat.exoplayer.callbacks.MusicPlaybackPreparer
 import com.intentsoft.tilawat.exoplayer.callbacks.MusicPlayerEventListener
 import com.intentsoft.tilawat.exoplayer.callbacks.MusicPlayerNotificationListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-/**
- * @author user
- * @date 27.09.2021
- */
 
 private const val SERVICE_TAG = "MusicService"
 
@@ -117,7 +116,7 @@ class MusicService : MediaBrowserServiceCompat() {
         itemToPlay: MediaMetadataCompat?,
         playNow: Boolean
     ) {
-        val curSongIndex = if(curPlayingSong == null) 0 else songs.indexOf(itemToPlay)
+        val curSongIndex = if (curPlayingSong == null) 0 else songs.indexOf(itemToPlay)
         exoPlayer.prepare(firebaseMusicSource.asMediaSource(dataSourceFactory))
         exoPlayer.seekTo(curSongIndex, 0L)
         exoPlayer.playWhenReady = playNow
@@ -140,7 +139,7 @@ class MusicService : MediaBrowserServiceCompat() {
         clientPackageName: String,
         clientUid: Int,
         rootHints: Bundle?
-    ): BrowserRoot? {
+    ): BrowserRoot {
         return BrowserRoot(MEDIA_ROOT_ID, null)
     }
 
@@ -148,13 +147,17 @@ class MusicService : MediaBrowserServiceCompat() {
         parentId: String,
         result: Result<MutableList<MediaBrowserCompat.MediaItem>>
     ) {
-        when(parentId) {
+        when (parentId) {
             MEDIA_ROOT_ID -> {
                 val resultsSent = firebaseMusicSource.whenReady { isInitialized ->
-                    if(isInitialized) {
+                    if (isInitialized) {
                         result.sendResult(firebaseMusicSource.asMediaItems())
-                        if(!isPlayerInitialized && firebaseMusicSource.songs.isNotEmpty()) {
-                            preparePlayer(firebaseMusicSource.songs, firebaseMusicSource.songs[0], false)
+                        if (!isPlayerInitialized && firebaseMusicSource.songs.isNotEmpty()) {
+                            preparePlayer(
+                                firebaseMusicSource.songs,
+                                firebaseMusicSource.songs[0],
+                                false
+                            )
                             isPlayerInitialized = true
                         }
                     } else {
@@ -162,7 +165,7 @@ class MusicService : MediaBrowserServiceCompat() {
                         result.sendResult(null)
                     }
                 }
-                if(!resultsSent) {
+                if (!resultsSent) {
                     result.detach()
                 }
             }

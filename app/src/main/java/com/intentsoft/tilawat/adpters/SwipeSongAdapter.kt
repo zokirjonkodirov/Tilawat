@@ -4,10 +4,6 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import com.intentsoft.tilawat.R
 import kotlinx.android.synthetic.main.list_item.view.tvPrimary
 
-/**
- * @author user
- * @date 29.09.2021
- */
 class SwipeSongAdapter : BaseSongAdapter(R.layout.swipe_item) {
 
     override val differ = AsyncListDiffer(this, diffCallback)

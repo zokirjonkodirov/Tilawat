@@ -6,19 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.intentsoft.tilawat.R
 import com.intentsoft.tilawat.data.entities.Song
-import kotlinx.android.synthetic.main.list_item.view.*
 
-/**
- * @author user
- * @date 30.09.2021
- */
 abstract class BaseSongAdapter(
     private val layoutId: Int
-): RecyclerView.Adapter<BaseSongAdapter.SongViewHolder>() {
+) : RecyclerView.Adapter<BaseSongAdapter.SongViewHolder>() {
 
-    class SongViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    class SongViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     protected val diffCallback = object : DiffUtil.ItemCallback<Song>() {
         override fun areItemsTheSame(oldItem: Song, newItem: Song): Boolean {
@@ -39,13 +33,14 @@ abstract class BaseSongAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
         return SongViewHolder(
             LayoutInflater.from(parent.context).inflate(
-            layoutId,
-            parent,
-            false
-        ))
+                layoutId,
+                parent,
+                false
+            )
+        )
     }
 
-    protected var onItemClickListener: ((Song) -> Unit)?= null
+    protected var onItemClickListener: ((Song) -> Unit)? = null
 
     fun setItemClickListener(listener: (Song) -> Unit) {
         onItemClickListener = listener

@@ -14,10 +14,6 @@ import com.intentsoft.tilawat.data.other.Event
 import com.intentsoft.tilawat.data.other.Resource
 import timber.log.Timber
 
-/**
- * @author Zokirjon
- * @date 29.09.2021
- */
 class MusicServiceConnection(
     context: Context
 ) {
@@ -107,7 +103,7 @@ class MusicServiceConnection(
 
         override fun onSessionEvent(event: String?, extras: Bundle?) {
             super.onSessionEvent(event, extras)
-            when(event) {
+            when (event) {
                 NETWORK_ERROR -> _networkError.postValue(
                     Event(
                         Resource.error(

@@ -2,13 +2,11 @@ package com.intentsoft.tilawat.exoplayer
 
 import android.os.SystemClock
 import android.support.v4.media.session.PlaybackStateCompat
-import android.support.v4.media.session.PlaybackStateCompat.*
-import com.intentsoft.tilawat.data.entities.Song
-
-/**
- * @author user
- * @date 29.09.2021
- */
+import android.support.v4.media.session.PlaybackStateCompat.ACTION_PLAY
+import android.support.v4.media.session.PlaybackStateCompat.ACTION_PLAY_PAUSE
+import android.support.v4.media.session.PlaybackStateCompat.STATE_BUFFERING
+import android.support.v4.media.session.PlaybackStateCompat.STATE_PAUSED
+import android.support.v4.media.session.PlaybackStateCompat.STATE_PLAYING
 
 inline val PlaybackStateCompat.isPrepared
     get() = state == STATE_BUFFERING ||
@@ -25,7 +23,7 @@ inline val PlaybackStateCompat.isPlayEnabled
                     state == STATE_PAUSED)
 
 inline val PlaybackStateCompat.currentPlaybackPosition: Long
-    get() = if(state == STATE_PLAYING) {
+    get() = if (state == STATE_PLAYING) {
         val timeDelta = SystemClock.elapsedRealtime() - lastPositionUpdateTime
         (position + (timeDelta * playbackSpeed)).toLong()
     } else position

@@ -10,10 +10,6 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.intentsoft.tilawat.exoplayer.FirebaseMusicSource
 
-/**
- * @author user
- * @date 29.09.2021
- */
 class MusicPlaybackPreparer(
     private val firebaseMusicSource: FirebaseMusicSource,
     private val playerPrepared: (MediaMetadataCompat?) -> Unit

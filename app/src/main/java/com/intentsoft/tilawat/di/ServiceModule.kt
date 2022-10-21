@@ -22,8 +22,6 @@ import dagger.hilt.android.scopes.ServiceScoped
 import javax.inject.Singleton
 
 /**
- * @author user
- * @date 27.09.2021
  * This Servis is responsible for palying music
  */
 @Module

@@ -14,10 +14,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-/**
- * @author user
- * @date 27.09.2021
- */
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {

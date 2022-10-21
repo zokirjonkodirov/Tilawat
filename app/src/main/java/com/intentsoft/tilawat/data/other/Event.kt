@@ -1,9 +1,5 @@
 package com.intentsoft.tilawat.data.other
 
-/**
- * @author user
- * @date 29.09.2021
- */
 open class Event<out T>(
     private val data: T
 ){

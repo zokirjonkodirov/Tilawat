@@ -1,11 +1,9 @@
 package com.intentsoft.tilawat.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
-import android.view.Menu
-import android.widget.SearchView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -14,12 +12,18 @@ import com.google.android.material.snackbar.Snackbar
 import com.intentsoft.tilawat.R
 import com.intentsoft.tilawat.adpters.SwipeSongAdapter
 import com.intentsoft.tilawat.data.entities.Song
-import com.intentsoft.tilawat.data.other.Status.*
+import com.intentsoft.tilawat.data.other.Status.ERROR
+import com.intentsoft.tilawat.data.other.Status.LOADING
+import com.intentsoft.tilawat.data.other.Status.SUCCESS
 import com.intentsoft.tilawat.exoplayer.isPlaying
 import com.intentsoft.tilawat.exoplayer.toSong
 import com.intentsoft.tilawat.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.ivCurSongImage
+import kotlinx.android.synthetic.main.activity_main.ivPlayPause
+import kotlinx.android.synthetic.main.activity_main.navHostFragment
+import kotlinx.android.synthetic.main.activity_main.rootLayout
+import kotlinx.android.synthetic.main.activity_main.vpSong
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -47,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         vpSong.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                if(playbackState?.isPlaying == true) {
+                if (playbackState?.isPlaying == true) {
                     mainViewModel.playOrToggleSong(swipeSongAdapter.songs[position])
                 } else {
                     curPlayingSong = swipeSongAdapter.songs[position]
@@ -68,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         navHostFragment.findNavController().addOnDestinationChangedListener { _, destination, _ ->
-            when(destination.id) {
+            when (destination.id) {
                 R.id.songFragment -> hideBottomBar()
                 R.id.homeFragment -> showBottomBar()
                 else -> showBottomBar()
@@ -110,11 +114,13 @@ class MainActivity : AppCompatActivity() {
                             switchViewPagerToCurrentSong(curPlayingSong ?: return@observe)
                         }
                     }
+
                     ERROR -> Unit
                     LOADING -> Unit
                 }
             }
         }
+
         mainViewModel.curPlayingSong.observe(this) {
             if (it == null) return@observe
 
@@ -122,12 +128,14 @@ class MainActivity : AppCompatActivity() {
 //            glide.load(curPlayingSong?.imageUrl).into(ivCurSongImage)
             switchViewPagerToCurrentSong(curPlayingSong ?: return@observe)
         }
+
         mainViewModel.playbackState.observe(this) {
             playbackState = it
             ivPlayPause.setImageResource(
                 if (playbackState?.isPlaying == true) R.drawable.ic_pause else R.drawable.ic_play
             )
         }
+
         mainViewModel.isConnected.observe(this) {
             it?.getContentIfNotHandled()?.let { result ->
                 when (result.status) {
@@ -136,10 +144,12 @@ class MainActivity : AppCompatActivity() {
                         result.message ?: "An unknown error occured",
                         Snackbar.LENGTH_LONG
                     ).show()
+
                     else -> Unit
                 }
             }
         }
+
         mainViewModel.networkError.observe(this) {
             it?.getContentIfNotHandled()?.let { result ->
                 when (result.status) {
@@ -148,6 +158,7 @@ class MainActivity : AppCompatActivity() {
                         result.message ?: "An unknown error occured",
                         Snackbar.LENGTH_LONG
                     ).show()
+
                     else -> Unit
                 }
             }

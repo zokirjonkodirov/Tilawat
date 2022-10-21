@@ -13,10 +13,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-/**
- * @author user
- * @date 30.09.2021
- */
 @HiltViewModel
 class SongViewModel @Inject constructor(
     musicServiceConnection: MusicServiceConnection
@@ -36,9 +32,9 @@ class SongViewModel @Inject constructor(
 
     private fun updateCurrentPlayerPosition() {
         viewModelScope.launch {
-            while(true) {
+            while (true) {
                 val pos = playbackState.value?.currentPlaybackPosition
-                if(curPlayerPosition.value != pos) {
+                if (curPlayerPosition.value != pos) {
                     _curPlayerPosition.postValue(pos!!)
                     _curSongDuration.postValue(MusicService.curSongDuration)
                 }

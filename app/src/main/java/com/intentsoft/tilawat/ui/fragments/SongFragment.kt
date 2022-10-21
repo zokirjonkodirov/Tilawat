@@ -1,15 +1,8 @@
 package com.intentsoft.tilawat.ui.fragments
 
-import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
-import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.widget.SearchView
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -23,16 +16,17 @@ import com.intentsoft.tilawat.exoplayer.toSong
 import com.intentsoft.tilawat.ui.viewmodels.MainViewModel
 import com.intentsoft.tilawat.ui.viewmodels.SongViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_song.*
+import kotlinx.android.synthetic.main.fragment_song.ivPlayPauseDetail
+import kotlinx.android.synthetic.main.fragment_song.ivSkip
+import kotlinx.android.synthetic.main.fragment_song.ivSkipPrevious
+import kotlinx.android.synthetic.main.fragment_song.seekBar
+import kotlinx.android.synthetic.main.fragment_song.tvCurTime
+import kotlinx.android.synthetic.main.fragment_song.tvSongDuration
+import kotlinx.android.synthetic.main.fragment_song.tvSongName
+import kotlinx.android.synthetic.main.fragment_song.tvSurahNameCard
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
-
-/**
- * @author user
- * @date 30.09.2021
- */
 
 @AndroidEntryPoint
 class SongFragment : Fragment(R.layout.fragment_song) {
@@ -50,15 +44,6 @@ class SongFragment : Fragment(R.layout.fragment_song) {
 
     private var shouldUpdateSeekbar = true
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
-
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
@@ -72,7 +57,7 @@ class SongFragment : Fragment(R.layout.fragment_song) {
 
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if(fromUser) {
+                if (fromUser) {
                     setCurPlayerTimeToTextView(progress.toLong())
                 }
             }
@@ -108,37 +93,42 @@ class SongFragment : Fragment(R.layout.fragment_song) {
     private fun subscribeToObservers() {
         mainViewModel.mediaItems.observe(viewLifecycleOwner) {
             it?.let { result ->
-                when(result.status) {
+                when (result.status) {
                     SUCCESS -> {
                         result.data?.let { songs ->
-                            if(curPlayingSong == null && songs.isNotEmpty()) {
+                            if (curPlayingSong == null && songs.isNotEmpty()) {
                                 curPlayingSong = songs[0]
                                 updateTitleAndSongImage(songs[0])
                             }
                         }
                     }
+
                     else -> Unit
                 }
             }
         }
+
         mainViewModel.curPlayingSong.observe(viewLifecycleOwner) {
-            if(it == null) return@observe
+            if (it == null) return@observe
             curPlayingSong = it.toSong()
             updateTitleAndSongImage(curPlayingSong!!)
         }
+
         mainViewModel.playbackState.observe(viewLifecycleOwner) {
             playbackState = it
             ivPlayPauseDetail.setImageResource(
-                if(playbackState?.isPlaying == true) R.drawable.ic_pause else R.drawable.ic_play
+                if (playbackState?.isPlaying == true) R.drawable.ic_pause else R.drawable.ic_play
             )
             seekBar.progress = it?.position?.toInt() ?: 0
         }
+
         songViewModel.curPlayerPosition.observe(viewLifecycleOwner) {
-            if(shouldUpdateSeekbar) {
+            if (shouldUpdateSeekbar) {
                 seekBar.progress = it.toInt()
                 setCurPlayerTimeToTextView(it)
             }
         }
+
         songViewModel.curSongDuration.observe(viewLifecycleOwner) {
             seekBar.max = it.toInt()
             val dateFormat = SimpleDateFormat("mm:ss", Locale.getDefault())

@@ -1,29 +1,32 @@
 package com.intentsoft.tilawat.exoplayer
 
-//import android.net.Uri
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaBrowserCompat.MediaItem.FLAG_PLAYABLE
 import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.MediaMetadataCompat
-import android.support.v4.media.MediaMetadataCompat.*
-//import android.util.Log
+import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ARTIST
+import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DISPLAY_DESCRIPTION
+import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE
+import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE
+import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_ID
+import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_URI
+import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_TITLE
 import androidx.core.net.toUri
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
-import com.intentsoft.tilawat.exoplayer.State.*
 import com.intentsoft.tilawat.data.remote.MusicDatabase
+import com.intentsoft.tilawat.exoplayer.State.STATE_CREATED
+import com.intentsoft.tilawat.exoplayer.State.STATE_ERROR
+import com.intentsoft.tilawat.exoplayer.State.STATE_INITIALIZED
+import com.intentsoft.tilawat.exoplayer.State.STATE_INITIALIZING
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-/**
- * @author user
- * @date 28.09.2021
- */
 class FirebaseMusicSource @Inject constructor(
     private val musicDatabase: MusicDatabase
-){
+) {
 
     var songs = emptyList<MediaMetadataCompat>()
 
@@ -71,7 +74,7 @@ class FirebaseMusicSource @Inject constructor(
 
     private var state: State = STATE_CREATED
         set(value) {
-            if(value == STATE_INITIALIZED || value == STATE_ERROR) {
+            if (value == STATE_INITIALIZED || value == STATE_ERROR) {
                 synchronized(onReadyListeners) {
                     field = value
                     onReadyListeners.forEach { listener ->
@@ -84,12 +87,12 @@ class FirebaseMusicSource @Inject constructor(
         }
 
     fun whenReady(action: (Boolean) -> Unit): Boolean {
-        if(state == STATE_CREATED || state == STATE_INITIALIZING) {
+        return if (state == STATE_CREATED || state == STATE_INITIALIZING) {
             onReadyListeners += action
-            return false
+            false
         } else {
             action(state == STATE_INITIALIZED)
-            return true
+            true
         }
     }
 }
